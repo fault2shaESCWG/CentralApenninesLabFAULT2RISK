@@ -1,0 +1,10 @@
+Models
+ModelMultiFaultsTest	
+Scaling Laws
+Le2010 Area a	
+MFD	b value		
+MFD_double_GR	bmin_0.8_bmax_1.1	
+Background
+bg_BG_1	
+scenario set
+sc_Set_1	

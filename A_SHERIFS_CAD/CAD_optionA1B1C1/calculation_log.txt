@@ -1,0 +1,15 @@
+
+
+Running logic tree branch:
+ModelMultiFaultsTest-bg_BG_1-Le2010-A-a-sc_Set_1-bmin_0.8_bmax_1.1-MFD_double_GR-s_1
+number of dsr to spend : 44710.0
+
+1%
+25%
+ Not enough moment left 
+- target set - 
+50%
+75%
+90%
+ratio between the target and the shape of the model : 1.0
+ratio of NMS : 15

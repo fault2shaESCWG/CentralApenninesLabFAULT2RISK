@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<nrml xmlns:gml="http://www.opengis.net/gml"
+	xmlns="http://openquake.org/xmlns/nrml/0.4">
+	<logicTree logicTreeID="lt1">
+		<logicTreeBranchingLevel branchingLevelID="bl1">
+			<logicTreeBranchSet uncertaintyType="sourceModel"
+							branchSetID="bs1">
+				<logicTreeBranch branchID="ModelMultiFaultsTest-bg_BG_1-Le2010-A-a-sc_Set_1-bmin_0.8_bmax_1.1-MFD_double_GR-s_1">
+					<uncertaintyModel>ModelMultiFaultsTest/bg_BG_1/Le2010_A_a/sc_Set_1/bmin_0.8_bmax_1.1/MFD_double_GR/Source_model_1.xml</uncertaintyModel>
+					<uncertaintyWeight>1.0</uncertaintyWeight>
+				</logicTreeBranch>
+			</logicTreeBranchSet>
+		</logicTreeBranchingLevel>
+	</logicTree>
+</nrml>

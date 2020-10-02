@@ -1,0 +1,4 @@
+Moment_rate_fault_initial calculated using muAs	1.1508378804337077e+17	N.m
+Moment_rate_faults_final calculated using 10^(1.5M+9.1)	9.811631399875152e+16	N.m
+Ratio of NMS slip rate counted in the iterative process: 	14	 %
+Moment_rate_model calculated using 10^(1.5M+9.1)	9.811631399875152e+16	N.m

@@ -1,0 +1,9 @@
+ModelMultiFaultsTest	upperSeismoDepth	0.
+ModelMultiFaultsTest	lowerSeismoDepth	15.
+ModelMultiFaultsTest	ruptAspectRatio	1.
+ModelMultiFaultsTest	nodalPlane	0.5	140.	60.	-90.
+ModelMultiFaultsTest	nodalPlane	0.5	220.	60.	-90.
+ModelMultiFaultsTest	hypoDepth	0.2	4.
+ModelMultiFaultsTest	hypoDepth	0.3	10.
+ModelMultiFaultsTest	hypoDepth	0.3	12.
+ModelMultiFaultsTest	hypoDepth	0.2	15.
