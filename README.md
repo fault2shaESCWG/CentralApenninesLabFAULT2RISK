@@ -50,9 +50,14 @@ NB: calculationNumber depends on your own computer. You can see this number duri
 3° Visualizing results
 m.	Open Matlab and move to the folder FAULT2RISK
 n.	Set the variable “OQ_RUN_ID” with the calculationNumber in the “user options” section of matlab scripts 
+
   •	C1_hazard_maps.m, 
+  
   •	C2_risk_map, 
+  
   •	D1_PartecipationHazard_by_section 
+  
   •	D2_PartecipationRisk_by_section  
+  
 o.	Run the Matlab codes
 p.	Figures are in WORKING_DIRECTORY_A1B1C1_10km/visualization/figures
