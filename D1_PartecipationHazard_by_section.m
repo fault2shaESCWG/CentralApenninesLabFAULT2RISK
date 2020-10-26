@@ -140,7 +140,7 @@ for i = 1:size(PartecipationSections,1)
     if PartecipationSections(i,levels(l)) > 0.02
         testo=(section_name{i,:});
         testo = strrep(testo,'_','');
-        text(i,PartecipationSections(i,levels(l))*100,testo,'Rotation',90,'FontSize',4)
+        text(i,PartecipationSections(i,levels(l))*100,testo,'Rotation',90,'FontSize',2)
     end
 end
 hold off
@@ -163,12 +163,12 @@ hold on
 % hold(axes1,'on');
 
 imagesc(PartecipationSections*100);
-%xtickformat('%3.2f');
+xtickformat('%3.2f');
 set(gca,'XGrid','off','YGrid','on','GridLineStyle','-',...
     'XTick',2:2:19,'XTickLabel',{round(IML(2:2:19),2)},'XTickLabelRotation',90,...
     'YTick',5:5:82,'YTickLabel',{5:5:82},'FontSize',10)
 
-xlim([0.5 48.5])
+xlim([0.5 48])
 ylim([0 83.5])
 colormap(cool)
 cbar = (colorbar)
@@ -179,18 +179,18 @@ ylabel(cbar,'Section Participation to Total Hazard (%)','FontSize', 12)
 xlabel('IML (PGA)','FontSize', 12);
 ylabel('section','FontSize', 12)
 
-
+% add text with id section at the end
 line([7 7],[0 83.5])
 line([17 17],[0 83.5])
-% add text with id section at the end
+
 xpos1 = repmat(20,90,1);
-xpos2 = repmat([31;21],45,1);
+xpos2 = repmat([35;21],45,1);
 ipos = 1
 for i =1:size(PartecipationSections,1)
 if sum((PartecipationSections(i,:)) > thershold_participation_label_figure/100)>0
         testo=(section_name{i,:});
         testo = strrep(testo,'_','');
-        text(xpos2(ipos),i,testo,'FontSize',6)
+        text(xpos2(ipos),i,testo,'FontSize',5.5)
         line([xpos1(i) xpos2(ipos)],[i i])
         ipos = ipos+1;
 end
