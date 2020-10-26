@@ -53,11 +53,11 @@ file_prop_bg = 'data/Example/Background_properties.txt'
 host_model_file = 'delete_share.xml'
 
 
-Run_Name = 'CAD_optionA1B1C1'
-File_geom = 'data/CAD_optionA1B1C1/Faults_geometry.txt'
-File_prop = 'data/CAD_optionA1B1C1/Faults_properties.txt'
-File_bg = 'data/CAD_optionA1B1C1/Background_geometry.txt'
-file_prop_bg = 'data/CAD_optionA1B1C1/Background_properties.txt'
+Run_Name = 'CAD_optionA1B1C1_10km'
+File_geom = 'data/CAD_optionA1B1C1_10km/Faults_geometry.txt'
+File_prop = 'data/CAD_optionA1B1C1_10km/Faults_properties.txt'
+File_bg = 'data/CAD_optionA1B1C1_10km/Background_geometry.txt'
+file_prop_bg = 'data/CAD_optionA1B1C1_10km/Background_properties.txt'
 host_model_file = 'delete_share.xml'
 
 
