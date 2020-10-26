@@ -57,7 +57,10 @@ n.	Set the variable “OQ_RUN_ID” with the calculationNumber in the “user op
   
   •	D1_PartecipationHazard_by_section 
   
-  •	D2_PartecipationRisk_by_section  
+  •	D2_PartecipationRisk_by_section (note that D2_PartecipationRisk_by_section_aquila.m produces a figure centered on L'Aquila)
+  
   
 o.	Run the Matlab codes
 p.	Figures are in WORKING_DIRECTORY_A1B1C1_10km/visualization/figures
+
+We also provide extra codes (O_name.m) for mapping traces, master faults and earthquake catalog.
