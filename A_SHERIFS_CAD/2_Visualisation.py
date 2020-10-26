@@ -71,14 +71,14 @@ class checking_the_input():
         
         # CentApp 
                 
-        self.Run_name = 'CAD_optionA1B1C1'
-        self.File_geom = 'data/CAD_optionA1B1C1/Faults_geometry.txt'
-        self.FileName_Prop = 'data/CAD_optionA1B1C1/Faults_properties.txt'
-        self.File_bg = 'data/CAD_optionA1B1C1/Background_geometry.txt'
-        self.completness_file = 'data/CAD_optionA1B1C1/completness.txt'
-        self.catalog_file = 'data/CAD_optionA1B1C1/catalog.txt'
-        self.file_faults_data = 'data/CAD_optionA1B1C1/EQ_on_faults_data.txt'
-        self.sub_area_file = 'data/CAD_optionA1B1C1/sub_areas.txt'
+        self.Run_name = 'CAD_optionA1B1C1_10km'
+        self.File_geom = 'data/CAD_optionA1B1C1_10km/Faults_geometry.txt'
+        self.FileName_Prop = 'data/CAD_optionA1B1C1_10km/Faults_properties.txt'
+        self.File_bg = 'data/CAD_optionA1B1C1_10km/Background_geometry.txt'
+        self.completness_file = 'data/CAD_optionA1B1C1_10km/completness.txt'
+        self.catalog_file = 'data/CAD_optionA1B1C1_10km/catalog.txt'
+        self.file_faults_data = 'data/CAD_optionA1B1C1_10km/EQ_on_faults_data.txt'
+        self.sub_area_file = 'data/CAD_optionA1B1C1_10km/sub_areas.txt'
     
         
         self.end_year_of_catalog = 2014
