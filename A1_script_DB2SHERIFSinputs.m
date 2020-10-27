@@ -49,7 +49,7 @@ mainpath = 'WORKING_DIRECTORY_A1B1C1_10km'
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 pathout1 = fullfile(mainpath,'Visualization','figure');
-pathout2 = fullfile('A_SHERIFS_CAD','data','CAD_optionA1B1C1');
+pathout2 = fullfile('A_SHERIFS_CAD','data','CAD_optionA1B1C1_10km');
 pathout3 = fullfile(mainpath,'Visualization','Data4Maps');
  
 if isdir(pathout1)==0

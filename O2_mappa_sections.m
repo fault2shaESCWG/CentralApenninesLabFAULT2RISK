@@ -14,8 +14,8 @@ lonlim=([12.7 14.3]);
 
 mainpath = 'WORKING_DIRECTORY_A1B1C1_10km';
 model_output = fullfile(mainpath,'Visualization');
-sherifs_path1 = fullfile('A_SHERIFS_CAD','data','CAD_optionA1B1C1');
-sherifs_path2 = fullfile('A_SHERIFS_CAD','CAD_optionA1B1C1','analysis','txt_files');
+sherifs_path1 = fullfile('A_SHERIFS_CAD','data','CAD_optionA1B1C1_10km');
+sherifs_path2 = fullfile('A_SHERIFS_CAD','CAD_optionA1B1C1_10km','analysis','txt_files');
 
 fault_prop = readtable(fullfile(sherifs_path1,'Faults_properties.txt'));
 fault_geom = readtable(fullfile(sherifs_path1,'Faults_geometry.txt'));

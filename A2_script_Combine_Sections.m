@@ -29,7 +29,7 @@ mainpath = 'WORKING_DIRECTORY_A1B1C1_10km'
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 pathout1 = fullfile(mainpath,'Visualization','scenarios');
-pathout2 = fullfile('A_SHERIFS_CAD','input','CAD_optionA1B1C1');
+pathout2 = fullfile('A_SHERIFS_CAD','input','CAD_optionA1B1C1_10km');
 if isdir(pathout1)==0
 mkdir (pathout1)
 end
@@ -43,7 +43,7 @@ fprintf(fid_scenari, ['set ', setID,'\n']);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % READ INPUTS
-pathin1 = fullfile('A_SHERIFS_CAD','data','CAD_optionA1B1C1');
+pathin1 = fullfile('A_SHERIFS_CAD','data','CAD_optionA1B1C1_10km');
 fault_geom = readtable(fullfile(pathin1,'Faults_geometry.txt'));
 section_name = unique(fault_geom.Var2);
 

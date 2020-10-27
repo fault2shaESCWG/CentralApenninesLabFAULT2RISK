@@ -19,7 +19,7 @@ openquakepath = fullfile(mainpath,'OQoutputs');
 model_output = fullfile(mainpath,'Visualization');
 sherifs_path1 = fullfile('A_SHERIFS_CAD','data','CAD_optionA1B1C1_10km');
 sherifs_path2 = fullfile('A_SHERIFS_CAD','CAD_optionA1B1C1_10km','analysis','txt_files');
-OQ_RUN_ID = '6';% Number of Openquake run ID
+OQ_RUN_ID = '5';% Number of Openquake run ID
 fprintf(['Warning: You are using OQ_RUN_ID',num2str(OQ_RUN_ID)]);
 
 limitisliprate = [0 0.1 0.5 1 3];
@@ -83,7 +83,7 @@ end
  pga_min = floor(min(yi)*10)/10;
  caxis([pga_min pga_max]);
  %c_tick = linspace(0,pga_max,size(mycolors,1)+1);
- c_tick = linspace(pga_min,pga_max,size(mycolors,1)+1)
+ c_tick = linspace(pga_min,pga_max,size(mycolors,1)+1);
  %c_tick = linspace(0,pga_max,size(mycolors,1)+1);
  
  colbprop = colorbar;

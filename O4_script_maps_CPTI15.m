@@ -14,6 +14,7 @@ clc
 close all
 warning('off','all')
 addpath ('INPUT/','INPUT/MasterFaults_lonlat/')
+addpath ('INPUT/','area/')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% make output directory
 pathout1 = fullfile('WORKING_DIRECTORY_A1B1C1_10km','Visualization','figure');
@@ -39,7 +40,7 @@ minimum_magnitude = 5;
  y_eq = cpti15.LatDef(cpti15.MwDef >= minimum_magnitude);
  m_eq = cpti15.MwDef(cpti15.MwDef >= minimum_magnitude);
 
- area = shaperead(fullfile('area','background.shp'));
+ area = shaperead(fullfile('INPUT','area','background.shp'));
  x_area = [area.X]';y_area = [area.Y]';
 %% read the DB-excel format
 [fault_data,masterfault_names,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','Fault');

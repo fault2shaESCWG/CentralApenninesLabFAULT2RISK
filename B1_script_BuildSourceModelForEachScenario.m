@@ -10,7 +10,7 @@ warning('off','all')
 % USER OPTIONS
 % path for the SHERIFS output xml source model
 % we here use only the 1st MonteCarlo run based on the mean parameters
-pathin = fullfile('A_SHERIFS_CAD','CAD_optionA1B1C1','ModelMultiFaultsTest','bg_BG_1','Le2010_A_a','sc_Set_1','bmin_0.8_bmax_1.1','MFD_double_GR')
+pathin = fullfile('A_SHERIFS_CAD','CAD_optionA1B1C1_10km','ModelMultiFaultsTest','bg_BG_1','Le2010_A_a','sc_Set_1','bmin_0.8_bmax_1.1','MFD_double_GR')
 filename = 'Source_model_1';           % xml file
 % make output directory for xml files
 mainpath = 'WORKING_DIRECTORY_A1B1C1_10km'
@@ -40,7 +40,7 @@ copyfile (fullfile(pathin,strcat(filename,'.xml')),fullfile(pathout1,strcat(file
 xml = xml2struct( fullfile(pathin,strcat(filename , '.xml'))) ;                % xml file
 
 numero_sorgenti_faglie = size( xml.nrml.sourceModel.simpleFaultSource,2) ;  %
-numero_sorgenti_ch = size( xml.nrml.sourceModel.characteristicFaultSource,2)   %
+numero_sorgenti_ch = size( xml.nrml.sourceModel.characteristicFaultSource,2);   %
 
 
 

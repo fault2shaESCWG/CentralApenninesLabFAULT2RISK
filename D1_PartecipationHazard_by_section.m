@@ -9,7 +9,7 @@ warning('off','all')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % USER OPTIONS
 afoe = 0.0021;
-OQ_RUN_ID = '6';% Number of Openquake run ID
+OQ_RUN_ID = '5';% Number of Openquake run ID
 fprintf(['Warning: You are using OQ_RUN_ID ',num2str(OQ_RUN_ID)]);
 
 site = [13.4 42.35]; sito = 'AQ'; % coordinate of the site
@@ -163,7 +163,7 @@ hold on
 % hold(axes1,'on');
 
 imagesc(PartecipationSections*100);
-xtickformat('%3.2f');
+%xtickformat('%3.2f');
 set(gca,'XGrid','off','YGrid','on','GridLineStyle','-',...
     'XTick',2:2:19,'XTickLabel',{round(IML(2:2:19),2)},'XTickLabelRotation',90,...
     'YTick',5:5:82,'YTickLabel',{5:5:82},'FontSize',10)
