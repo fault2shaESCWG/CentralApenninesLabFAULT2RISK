@@ -39,7 +39,7 @@ g.	Open Matlab and move to the folder FAULT2RISK
 h.	Run B1_script_BuildSourceModelForEachScenario.m that will prepare input files for Openquake
 i.	Open a Terminal and type : source ~/openquake/env.sh
 j.	From the Terminal, move to the folder CentralApenninesLabFAULT2RISK-main and type : 
-oq engine --run B_OQ_CALCULATION_GMPE_FRAGILTY_EXPOSURE/job_damage.ini --log-level info
+oq engine --run B_OQ_JOB_GMPE_FRAGILTY_EXPOSURE/job_damage.ini --log-level info
 (this run can take more than 30 minutes)
 To export hazard and risk results:
 k.	From the terminal type : mkdir WORKING_DIRECTORY_A1B1C1_10km/OQoutputs
