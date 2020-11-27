@@ -49,7 +49,7 @@ mainpath = 'WORKING_DIRECTORY_A1B1C1_10km'
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 pathout1 = fullfile(mainpath,'Visualization','figure');
-pathout2 = fullfile('A_SHERIFS_CAD','data','CAD_optionA1B1C1_10km');
+pathout2 = fullfile('A_SHERIFS_CAD','data','CAD_optionA1B1C1');
 pathout3 = fullfile(mainpath,'Visualization','Data4Maps');
  
 if isdir(pathout1)==0
@@ -75,6 +75,10 @@ sections_length_input = sections_length_input*1000;
 [sliprate_data,sliprate_TXT5,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','SlipRate');
 [localgeomKin_data,localgeomKin_TXT6,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','LocalGeometryKinematics');
 
+[~,masterfault_selection,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','MasterFaultSelection','E7:E12');
+R = masterfault_selection;
+display ('You have selected the following Master fault options')
+R(~cellfun('isempty',R))
 % faults name listed in the DB
 masterfaults_all = masterfault_names(2:end,4);
 masterfaults = unique(masterfaults_all);
@@ -554,6 +558,8 @@ set(gca, 'XTick',[-2000:2000:(resfault_length+500)],'XTickLabel',{'',(0:2000:(re
 
 
 saveas(2,fullfile(pathout1,strcat(masterfault,'_sliprates_profile_option',num2str(extrapolate_slip_rate_option),'_',date,'.png')),'png')
+print(fullfile(pathout1,strcat(masterfault,'_sliprates_profile_option',num2str(extrapolate_slip_rate_option),'_',date,'.tiff')),'-dtiff','-r600');
+
 close(2);
    end
 end
@@ -561,6 +567,7 @@ end
 end
 
 saveas(1,fullfile(pathout1,strcat('map','_sliprates_profile_option',num2str(extrapolate_slip_rate_option),'_',date,'.png')),'tiff')
+print(fullfile(pathout1,strcat('map','_sliprates_profile_option',num2str(extrapolate_slip_rate_option),'_',date,'.tiff')),'-dtiff','-r600');
 
 fclose(fid_prop);
 fclose(fid_geom);

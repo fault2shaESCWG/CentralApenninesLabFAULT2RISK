@@ -9,7 +9,7 @@ warning('off','all')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % USER OPTIONS
 afoe = 0.0021;
-OQ_RUN_ID = '5';% Number of Openquake run ID
+OQ_RUN_ID = '8';% Number of Openquake run ID
 fprintf(['Warning: You are using OQ_RUN_ID ',num2str(OQ_RUN_ID)]);
 
 site = [13.4 42.35]; sito = 'AQ'; % coordinate of the site
@@ -24,7 +24,8 @@ sherifs_path2 = fullfile('A_SHERIFS_CAD','CAD_optionA1B1C1_10km','analysis','txt
 limitisliprate = [0 0.1 0.5 1 3];
 coloreslip = [.5 .5 .5; 0 1 0; 0 0 1; 1 0 0];
 labelsliprate = {'<0.1','0.1-0.5','0.6-1.0','>1.0'};
-latlim=([41.6 43.2]);
+
+latlim=([41.6 43.1]);
 lonlim=([12.7 14.3]);
 
 % bar plot of the contribution for INTESITY measure levels provided in the
@@ -125,6 +126,8 @@ set (gca, 'YScale','log','XScale','log')
 xlim([IML(1) IML(end)])
 grid on
 saveas(1,fullfile(model_output,'figure',strcat(char(sito),'_HC_',date,'.png')),'tiff')
+print(fullfile(model_output,'figure',strcat(char(sito),'_HC_',date,'.tiff')),'-dtiff','-r600');
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -149,6 +152,7 @@ ylabel(['percentage of contribution to IML:', num2str(IML(levels(l)))])
 title(figure_title, 'Interpreter', 'none');
 end
 saveas(2,fullfile(model_output,'figure',strcat(char(sito),'_barplot_',date,'.png')),'tiff')
+print(fullfile(model_output,'figure',strcat(char(sito),'_barplot_',date,'.tiff')),'-dtiff','-r600');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -163,7 +167,7 @@ hold on
 % hold(axes1,'on');
 
 imagesc(PartecipationSections*100);
-%xtickformat('%3.2f');
+xtickformat('%3.2f');
 set(gca,'XGrid','off','YGrid','on','GridLineStyle','-',...
     'XTick',2:2:19,'XTickLabel',{round(IML(2:2:19),2)},'XTickLabelRotation',90,...
     'YTick',5:5:82,'YTickLabel',{5:5:82},'FontSize',10)
@@ -198,6 +202,8 @@ end
 
 %title(figure_title, 'Interpreter', 'none');
 saveas(3,fullfile(model_output,'figure',strcat(char(sito),'_imagesc_',date,'.png')),'tiff')
+print(fullfile(model_output,'figure',strcat(char(sito),'_imagesc_',date,'.tiff')),'-dtiff','-r600');
+
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -210,8 +216,12 @@ xl = 13.33; % to place the legend
 figure(4)
 hold on
 ax = usamap(latlim,lonlim);
-setm(ax,'MapProjection','mercator', 'MapLatLimit',latlim,'MapLonLimit',lonlim,'FlineWidth',0.7,'FontSize',6);
+%setm(ax,'MapProjection','mercator', 'MapLatLimit',latlim,'MapLonLimit',lonlim,'FlineWidth',0.7,'FontSize',6);
+setm(ax,'MapProjection','mercator', 'MapLatLimit',latlim,'MapLonLimit',lonlim,...
+     'FlineWidth',0.7,'FontSize',8,'MLabelLocation',1,'PLabelLocation',1,'MLabelRound',0,'PLabelRound',0,'LabelFormat','none');
+
 textm(yl,xl,strcat('IML "PGA" : ',num2str(IML(levels(l)),'%4.3f'),'(g)'),'FontSize',6,'FontAngle','Italic');
+
 for ns = 1:size(PartecipationSections,1)
 section = (section_name{ns}) 
 pos1 = find((strcmpi(fault_slip.Var3,section))==1);
@@ -245,7 +255,7 @@ end
 
 
 end
-h = textm(site(:,2),site(:,1)-0.23,'L Aquila','FontSize',6);
+h = textm(site(:,2),site(:,1)-0.28,'L Aquila','FontSize',6);
 t = plotm(site(:,2),site(:,1),'s','MarkerSize',8);
 t.MarkerFaceColor = 'yellow';
 t.MarkerEdgeColor = 'black';
@@ -265,8 +275,29 @@ title(legend1,'slip rate (mm/yr)')
 legend1.Title.Visible = 'on';
 hold off 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 hold off
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% move label of meridians and parallels
+set(findobj(ax.Children, 'Tag', 'MLabel'),'Units','points')          % convert label position from 'data' to 'points'
+mlabels = findobj(ax.Children, 'Tag', 'MLabel');                     % find all labels
+mlabelpos = get(findobj(ax.Children, 'Tag', 'MLabel'),'Position');    % get the positions of each label
+for iL = 1 : length(mlabelpos)                                           % loop over each label
+    mlabelpos{iL}(2) = mlabelpos{iL}(2) + 10;                             % add desired offset to the label position
+    set(mlabels(iL),'Position',mlabelpos{iL})                            % set new label position
+end
+set(findobj(ax.Children, 'Tag', 'PLabel'),'Units','points')          % convert label position from 'data' to 'points'
+plabels = findobj(ax.Children, 'Tag', 'PLabel');                     % find all labels
+plabelpos = get(findobj(ax.Children, 'Tag', 'PLabel'),'Position');    % get the positions of each label
+for iL = 1 : length(plabelpos)                                           % loop over each label
+    plabelpos{iL}(1) = plabelpos{iL}(1) + 4;
+    plabelpos{iL}(2) = plabelpos{iL}(2) + 1;                    % add desired offset to the label position
+    set(plabels(iL),'Position',plabelpos{iL})                            % set new label position
+end
+
 saveas(4,fullfile(model_output,'figure',strcat(char(sito),'_mappa_sliprate_HCcontribution',num2str(levels(l)),'_',date,'.png')),'tiff')
+print(fullfile(model_output,'figure',strcat(char(sito),'_mappa_sliprate_HCcontribution',num2str(levels(l)),'_',date,'.tiff')),'-dtiff','-r600');
+
 close(4)
 end
 %%

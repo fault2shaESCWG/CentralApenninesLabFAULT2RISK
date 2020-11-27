@@ -40,7 +40,7 @@ copyfile (fullfile(pathin,strcat(filename,'.xml')),fullfile(pathout1,strcat(file
 xml = xml2struct( fullfile(pathin,strcat(filename , '.xml'))) ;                % xml file
 
 numero_sorgenti_faglie = size( xml.nrml.sourceModel.simpleFaultSource,2) ;  %
-numero_sorgenti_ch = size( xml.nrml.sourceModel.characteristicFaultSource,2);   %
+numero_sorgenti_ch = size( xml.nrml.sourceModel.characteristicFaultSource,2)   %
 
 
 

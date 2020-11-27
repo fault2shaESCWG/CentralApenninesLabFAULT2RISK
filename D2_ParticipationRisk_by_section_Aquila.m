@@ -11,7 +11,7 @@ warning('off','all')
 site = [13.4 42.35]; sito = 'L Aquila'; % coordinate of the site
 %site = [13.44 42.04]; sito = 'AV'; % coordinate of the site
 fragility ='_Rostietal.2020-L-type';
-OQ_RUN_ID = '5';% Number of Openquake run ID
+OQ_RUN_ID = '8';% Number of Openquake run ID
 fprintf(['Warning: You are using OQ_RUN_ID ',num2str(OQ_RUN_ID)]);
 
 mainpath = 'WORKING_DIRECTORY_A1B1C1_10km';
@@ -121,7 +121,9 @@ end
  ax.FontSize = 6;
  setm(ax,'MapProjection','mercator', 'MapLatLimit',latlim,'MapLonLimit',lonlim,...
      'FlineWidth',0.7,'FontSize',6,'MLabelLocation',0.2,'PLabelLocation',0.4);
-%
+setm(ax,'MapProjection','mercator', 'MapLatLimit',latlim,'MapLonLimit',lonlim,...
+     'FlineWidth',0.7,'FontSize',8,'MLabelLocation',0.3,'PLabelLocation',0.3,'LabelFormat','none');
+
 
 %yl = 43.032;
 yl =42.699;
@@ -165,7 +167,7 @@ h = textm(site(:,2),site(:,1)-0.13,sito,'FontSize',6);
 l= plotm(site(:,2),site(:,1),'s','MarkerSize',8);
 l.MarkerFaceColor = 'yellow';
 l.MarkerEdgeColor = 'black';
-plotm(slip_rateDP.lat,slip_rateDP.lon,'ok','MarkerSize',4)
+plotm(slip_rateDP.lat,slip_rateDP.lon,'ok','MarkerSize',4,'MarkerFaceColor','w')
 title(strcat(figure_title,'fragility-',num2str(f)), 'Interpreter', 'none');
 
 % legend of SLIPRATES
@@ -189,7 +191,25 @@ legend1.Title.Visible = 'on';
 plotm(90,90,'ok','MarkerSize',4,'Display','Data points');
 
 hold off
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% move label of meridians and parallels
+set(findobj(ax.Children, 'Tag', 'MLabel'),'Units','points')          % convert label position from 'data' to 'points'
+mlabels = findobj(ax.Children, 'Tag', 'MLabel');                     % find all labels
+mlabelpos = get(findobj(ax.Children, 'Tag', 'MLabel'),'Position');    % get the positions of each label
+for iL = 1 : length(mlabelpos)                                           % loop over each label
+    mlabelpos{iL}(2) = mlabelpos{iL}(2) + 10;                             % add desired offset to the label position
+    set(mlabels(iL),'Position',mlabelpos{iL})                            % set new label position
+end
+set(findobj(ax.Children, 'Tag', 'PLabel'),'Units','points')          % convert label position from 'data' to 'points'
+plabels = findobj(ax.Children, 'Tag', 'PLabel');                     % find all labels
+plabelpos = get(findobj(ax.Children, 'Tag', 'PLabel'),'Position');    % get the positions of each label
+for iL = 1 : length(plabelpos)                                           % loop over each label
+    plabelpos{iL}(1) = plabelpos{iL}(1) + 4;
+    plabelpos{iL}(2) = plabelpos{iL}(2) + 1;                    % add desired offset to the label position
+    set(plabels(iL),'Position',plabelpos{iL})                            % set new label position
+end
 
 saveas(2,fullfile(model_output,'figure',strcat(char(sito),fragility,'_riskcontribution_fragility_',num2str(f),'_',date,'.png')),'tiff')
+print(fullfile(model_output,'figure',strcat(char(sito),fragility,'_riskcontribution_fragility_',num2str(f),'_',date,'.tiff')),'-dtiff','-r600');
 close(2)
  end
