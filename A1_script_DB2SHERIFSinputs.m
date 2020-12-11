@@ -504,9 +504,7 @@ figure(2)
 leg=[];
 hleg = 0;
 hold on
-hleg = hleg+1;
-leg(1,hleg)=errorbar(distance_sliprate,slipratePreferred,(slipratePreferred-sliprateError(:,1)),(sliprateError(:,2)-slipratePreferred),...
-    'Marker','s','LineStyle','none', 'Color','k','Display','DataPoints');
+
 if extrapolate_slip_rate_option ==1
     hleg = hleg+1;
 leg(1,hleg) = plot(resfault_cumsum_length,slipRateProfilePreferred,'-','color',[.5 .5 .5],'LineWidth',2,'Display','Interpolated Preferred');
@@ -514,18 +512,18 @@ hleg = hleg+1;
 leg(1,hleg) = plot(resfault_cumsum_length,slipRateProfileMin,':','color',[.5 .5 .5],'LineWidth',2,'Display','Interpolated Min Max');
                 plot(resfault_cumsum_length,slipRateProfileMax,':','color',[.5 .5 .5],'LineWidth',2,'Display','InterpolatedMax');
 hleg = hleg+1;
-leg(1,hleg) =  line([distance_sliprate(1),distance_sliprate(end)],[AverageSlipRatePreferred,AverageSlipRatePreferred],'color',[.7 .7 .7],'LineWidth',1,'Display','Avg Preferred');
+leg(1,hleg) =  line([distance_sliprate(1),distance_sliprate(end)],[AverageSlipRatePreferred,AverageSlipRatePreferred],'color','b','LineWidth',1,'Display','Avg Preferred');
 hleg = hleg+1;
-leg(1,hleg) =  line([distance_sliprate(1),distance_sliprate(end)],[AverageSlipRateMin,AverageSlipRateMin],'color',[.7 .7 .7],'LineWidth',1,'Display','Avg Min Max');
-            line([distance_sliprate(1),distance_sliprate(end)],[AverageSlipRateMax,AverageSlipRateMax],'color',[.7 .7 .7],'LineWidth',1,'Display','Avg Max');
+leg(1,hleg) =  plot([distance_sliprate(1),distance_sliprate(end)],[AverageSlipRateMin,AverageSlipRateMin],':','color','b','LineWidth',1,'Display','Avg Min Max');
+            plot([distance_sliprate(1),distance_sliprate(end)],[AverageSlipRateMax,AverageSlipRateMax],':','color','b','LineWidth',1,'Display','Avg Max');
 
 elseif extrapolate_slip_rate_option ==2
    hleg = hleg+1;
-leg(1,hleg) = line([resfault_cumsum_length(1),resfault_cumsum_length(end)],[AverageSlipRatePreferred,AverageSlipRatePreferred],'color',[.7 .7 .7],'LineWidth',1,'Display','Avg Preferred');
+leg(1,hleg) = line([resfault_cumsum_length(1),resfault_cumsum_length(end)],[AverageSlipRatePreferred,AverageSlipRatePreferred],'color','b','LineWidth',1,'Display','Avg Preferred');
    hleg = hleg+1;
-leg(1,hleg) = line([resfault_cumsum_length(1),resfault_cumsum_length(end)],[AverageSlipRateMin,AverageSlipRateMin],'color',[.7 .7 .7],'LineWidth',1,'Display','Avg Min Max');
+leg(1,hleg) = plot([resfault_cumsum_length(1),resfault_cumsum_length(end)],[AverageSlipRateMin,AverageSlipRateMin],':','color','b','LineWidth',1,'Display','Avg Min Max');
   hleg = hleg+1;
-leg(1,hleg) =  line([resfault_cumsum_length(1),resfault_cumsum_length(end)],[AverageSlipRateMax,AverageSlipRateMax],'color',[.7 .7 .7],'LineWidth',1,'Display','Avg Min Max');
+leg(1,hleg) =  plot([resfault_cumsum_length(1),resfault_cumsum_length(end)],[AverageSlipRateMax,AverageSlipRateMax],':','color','b','LineWidth',1,'Display','Avg Min Max');
 
 end
 
@@ -533,12 +531,16 @@ hleg1 = hleg+1;
 hleg2 = hleg+2;
 for i = 1: (length(meanslipratesectionPreferred))
     
-        leg(1,hleg1) =    line([resfault_cumsum_length(ind(i)) resfault_cumsum_length(ind(i+1))],[meanslipratesectionPreferred(i),meanslipratesectionPreferred(i)],'color',[.3 .3 .3],'LineWidth',2,'Display','Avg Sect Pref');
+        leg(1,hleg1) =    line([resfault_cumsum_length(ind(i)) resfault_cumsum_length(ind(i+1))],[meanslipratesectionPreferred(i),meanslipratesectionPreferred(i)],'color','r','LineWidth',1,'Display','Avg Sect Pref');
   
-        leg(1,hleg2) =    line([resfault_cumsum_length(ind(i)) resfault_cumsum_length(ind(i+1))],[meanslipratesectionMin(i),meanslipratesectionMin(i)],'color',[.3 .3 .3],'LineWidth',2,'Display','Avg Sect Min Max');
-                          line([resfault_cumsum_length(ind(i)) resfault_cumsum_length(ind(i+1))],[meanslipratesectionMax(i),meanslipratesectionMax(i)],'color',[.3 .3 .3],'LineWidth',2,'Display','Avg Sect Max');
+        leg(1,hleg2) =    plot([resfault_cumsum_length(ind(i)) resfault_cumsum_length(ind(i+1))],[meanslipratesectionMin(i),meanslipratesectionMin(i)],':','color','r','LineWidth',1,'Display','Avg Sect Min Max');
+                          plot([resfault_cumsum_length(ind(i)) resfault_cumsum_length(ind(i+1))],[meanslipratesectionMax(i),meanslipratesectionMax(i)],':','color','r','LineWidth',1,'Display','Avg Sect Max');
 
-  end
+end
+
+hleg = hleg2+1;
+leg(1,hleg)=errorbar(distance_sliprate,slipratePreferred,(slipratePreferred-sliprateError(:,1)),(sliprateError(:,2)-slipratePreferred),...
+    'Marker','s','MarkerFaceColor','w','LineStyle','none', 'MarkerEdgeColor','k','Color','k','Display','DataPoints');
 xlabel('distance along strike (km)')
 ylabel ('mm/yr')
 legend(leg,'location','best')
