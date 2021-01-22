@@ -188,7 +188,7 @@ legend1.FontSize = 6;
 title(legend1,'slip rate (mm/yr)')
 legend1.Title.Visible = 'on';
 
-plotm(90,90,'ok','MarkerSize',4,'Display','Data points');
+plotm(90,90,'ok','MarkerSize',4,'MarkerFaceColor','w','Display','Data points');
 
 hold off
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

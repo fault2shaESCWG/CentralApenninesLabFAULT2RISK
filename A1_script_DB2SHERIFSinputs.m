@@ -1,6 +1,6 @@
 % this code reads input data stored in the
 % Fault2SHA_CentralApennines_Database.xls % (https://doi.pangaea.de/10.1594/PANGAEA.922582)
-% and coordinates of MasterFaults according to the files given in the folder MasterFaults_lonlat
+% and coordinates of MainFaults according to the files given in the folder MainFaults_lonlat
 % and produces SHERIFS input files.
 
 % in the USER OPTIONS sections:
@@ -22,17 +22,17 @@ clear all
 clc
 close all
 warning('off','all')
-addpath ('INPUT/','INPUT/MasterFaults_lonlat/')
+addpath ('INPUT/','INPUT/MainFaults_lonlat/')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % USER OPTIONS
 extrapolate_slip_rate_option =1; % 1=tip to 0mm/year, 2 = no zero
 modelname = 'ModelMultiFaultsTest'
-maxdiffUTM= 0.1; % in km, specify the max difference between two vertexes when resampling the masterfault trace
-dmax = 0.5; % in km, specify the maximum distance to associate a point to a masterfault
+maxdiffUTM= 0.1; % in km, specify the max difference between two vertexes when resampling the Mainfault trace
+dmax = 0.5; % in km, specify the maximum distance to associate a point to a Mainfault
 sections_length_input = 10; %km
-maxdip = 55; % maximum dip to be assigned to the masterfaults
+maxdip = 55; % maximum dip to be assigned to the Mainfaults
 USD = 0; %km
 LSD = 10; %km
 kin = 'N'; 
@@ -70,22 +70,22 @@ dmax = dmax*1000;
 sections_length_input = sections_length_input*1000; 
 
 % read the DB-excel format
-[fault_data,masterfault_names,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','Fault');
-[masterfault_data,masterfault_names2,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','MasterFault');
+[fault_data,Mainfault_names,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','Fault');
+[Mainfault_data,Mainfault_names2,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','MainFault');
 [sliprate_data,sliprate_TXT5,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','SlipRate');
 [localgeomKin_data,localgeomKin_TXT6,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','LocalGeometryKinematics');
 
-[~,masterfault_selection,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','MasterFaultSelection','E7:E12');
-R = masterfault_selection;
-display ('You have selected the following Master fault options')
+[~,Mainfault_selection,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','MainFaultSelection','E7:E12');
+R = Mainfault_selection;
+display ('You have selected the following Main fault options')
 R(~cellfun('isempty',R))
 % faults name listed in the DB
-masterfaults_all = masterfault_names(2:end,4);
-masterfaults = unique(masterfaults_all);
+Mainfaults_all = Mainfault_names(2:end,4);
+Mainfaults = unique(Mainfaults_all);
 
-% number of masterfaults in the DB
-n_masterfault = size(masterfaults,1);
-fprintf('you have %i masterfaults in the DB\n', n_masterfault)
+% number of Mainfaults in the DB
+n_Mainfault = size(Mainfaults,1);
+fprintf('you have %i Mainfaults in the DB\n', n_Mainfault)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -95,19 +95,19 @@ fid_prop = fopen(fullfile(pathout2,'Faults_properties.txt'),'w');
 fid_geom = fopen(fullfile(pathout2,'Faults_geometry.txt'),'w');
 fid_momentrate = fopen(fullfile(pathout2,'Faults_momentrate.txt'),'w');
 fid_usedsliprate = fopen(fullfile(pathout3,'USED_sliprateDP.txt'),'w');
-fid_usedmasterfaults = fopen(fullfile(pathout3,'USED_masterfaults.txt'),'w');
+fid_usedMainfaults = fopen(fullfile(pathout3,'USED_Mainfaults.txt'),'w');
 
 formatprop = '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n'; 
 formatgeom = '%s\t%s\t%s\t%s\t%s\n';
 formatmoment = '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n';
 formatusedsliprate = '%s %s %s %s %s\n';
-formatusedmasterfaults = '%s\t%s\n';
+formatusedMainfaults = '%s\t%s\n';
 
 fprintf(fid_prop,'model_name fault_name dip oriented kinematics upper_seismo_depth lower_seismo_depth slip_rate_min slip_rate_moy slip_rate_max Domain shear_modulus\n');
 fprintf(fid_geom,'model_name fault_name longitude latitude type_of_fault\n');
 fprintf(fid_momentrate,'model_name fault_name dip oriented kinematics upper_seismo_depth lower_seismo_depth slip_rate_min slip_rate_moy slip_rate_max Domain shear_modulus sectionlength MRmin MRmean MRmax\n');
 fprintf(fid_usedsliprate,formatusedsliprate,'lon', 'lat','preferred', 'min','max');
-fprintf(fid_usedmasterfaults,formatusedmasterfaults,'name', 'activityscale');
+fprintf(fid_usedMainfaults,formatusedMainfaults,'name', 'activityscale');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -115,30 +115,30 @@ fprintf(fid_usedmasterfaults,formatusedmasterfaults,'name', 'activityscale');
 All_tip_of_sections =[];
 IDsection =0;
 
-for nf = 1:size(masterfaults,1)% start loop for each masterfault
+for nf = 1:size(Mainfaults,1)% start loop for each Mainfault
     sections_id_files  = [];
     LatSections = [];
     LonSections = [];
-    masterfault =[];
-    masterfault = char(masterfaults(nf,:));
-    % if masterfaults exists in the folder MastreFaults_lonlat load coordinates of the masterfaults
-    in_name_masterfault = fullfile('MasterFaults_lonlat',strcat(masterfault,'.txt'));
-    if exist(in_name_masterfault) ~= 2 % if a file exist the value is 2
-      fprintf(['there are no coordinates of the ', masterfault,' in the folder\n'])
-    else  % use this MasterFault
+    Mainfault =[];
+    Mainfault = char(Mainfaults(nf,:));
+    % if Mainfaults exists in the folder MastreFaults_lonlat load coordinates of the Mainfaults
+    in_name_Mainfault = fullfile('MainFaults_lonlat',strcat(Mainfault,'.txt'));
+    if exist(in_name_Mainfault) ~= 2 % if a file exist the value is 2
+      fprintf(['there are no coordinates of the ', Mainfault,' in the folder\n'])
+    else  % use this MainFault
    
         coordinateUTM=[];coordinateWGS=[];
-        coordinateWGS = load(in_name_masterfault);
+        coordinateWGS = load(in_name_Mainfault);
 
 %% position of the fault in the excel-Sheets of DB 
-h1 = find(strcmp(masterfault_names2(:,2),masterfault))-1; % position-header
-h5 = find(strcmp(sliprate_TXT5(:,4),masterfault))-1; % position-header
-h6 = find(strcmp(localgeomKin_TXT6(:,4),masterfault))-1; % position-header
+h1 = find(strcmp(Mainfault_names2(:,2),Mainfault))-1; % position-header
+h5 = find(strcmp(sliprate_TXT5(:,4),Mainfault))-1; % position-header
+h6 = find(strcmp(localgeomKin_TXT6(:,4),Mainfault))-1; % position-header
 
-faultActivity = masterfault_data(h1,7);
+faultActivity = Mainfault_data(h1,7);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-fprintf(fid_usedmasterfaults,formatusedmasterfaults, masterfault,num2str(faultActivity));
+fprintf(fid_usedMainfaults,formatusedMainfaults, Mainfault,num2str(faultActivity));
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % calculate the average dip from LocalGeometryKinematics 
@@ -151,7 +151,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CHECK if the order of the vertexes of the fault are given according to right-hand rule
 
-strike = masterfault_data(h1,3);
+strike = Mainfault_data(h1,3);
 az = azimuth(coordinateWGS(1,2),coordinateWGS(1,1),coordinateWGS(end,2),coordinateWGS(end,1));
 
 d1 = az - strike;
@@ -242,7 +242,7 @@ d_trace_resUTM =[];
  resfault_cumsum_length = cumsum(d_trace_resUTM);
  resfault_length = resfault_cumsum_length(end);
 
-% associate the point with a measure of slip rate to nearest vertex of the resampled masterfault trace
+% associate the point with a measure of slip rate to nearest vertex of the resampled Mainfault trace
     d=[];min_d=[];
     for i = 1:size(slipratePreferred,1)
         temp_dist =[];
@@ -270,7 +270,7 @@ distance_sliprate = resfault_cumsum_length(d);
 % check if two or more meausures are on the same point
 u = unique(distance_sliprate);
 if length(u) < length(distance_sliprate)
-    fprintf([masterfault,' there are 2 or more measures at the same location (used the mean) >>\n'])
+    fprintf([Mainfault,' there are 2 or more measures at the same location (used the mean) >>\n'])
     distanza_sliprate_2   =[];slipratePreferred_2   =[];sliprateError_2       =[];
     slipratecoordinateWGS_2 =[];slipratecoordinateUTM_2 =[];   
     for iu = 1:length(u)
@@ -384,7 +384,7 @@ for i =1:(length(ind)-1)
        
     % save coordinates of the section in the fault_geom
     for j = 1: length(Lat)
-    fprintf(fid_geom,formatgeom, modelname,strcat(masterfault,'_',num2str(i)),num2str(Lon(j)), num2str(Lat(j)), 'sf');
+    fprintf(fid_geom,formatgeom, modelname,strcat(Mainfault,'_',num2str(i)),num2str(Lon(j)), num2str(Lat(j)), 'sf');
     
     end 
     % save tip of sections for plot
@@ -455,7 +455,7 @@ end
  for i=1: (length(ind)-1)
   
    
-   fprintf(fid_prop,formatprop, modelname,strcat(masterfault,'_',num2str(i)),...
+   fprintf(fid_prop,formatprop, modelname,strcat(Mainfault,'_',num2str(i)),...
                             num2str(average_dip),oriented,kin,num2str(USD),num2str(LSD),...
                             num2str(meanslipratesectionMin(i,1),'%3.2f'),num2str(meanslipratesectionPreferred(i,1),'%3.2f'),num2str(meanslipratesectionMax(i,1),'%3.2f'),...
                             Domains,num2str(Shmod));
@@ -464,7 +464,7 @@ end
    MR2 = l_section(i,1)*Shmod*1e9* (LSD-USD)/sind(average_dip)*1000*  meanslipratesectionPreferred(i,1)/1000;
    MR3 = l_section(i,1)*Shmod*1e9* (LSD-USD)/sind(average_dip)*1000*  meanslipratesectionMax(i,1)/1000;
    
-   fprintf(fid_momentrate,formatmoment, modelname,strcat(masterfault,'_',num2str(i)),...
+   fprintf(fid_momentrate,formatmoment, modelname,strcat(Mainfault,'_',num2str(i)),...
                             num2str(average_dip),oriented,kin,num2str(USD),num2str(LSD),...
                             num2str(meanslipratesectionMin(i,1),'%3.2f'),num2str(meanslipratesectionPreferred(i,1),'%3.2f'),num2str(meanslipratesectionMax(i,1),'%3.2f'),...
                             Domains,num2str(Shmod),num2str(l_section(i,1)),num2str(MR1),num2str(MR2),num2str(MR3));                     
@@ -559,8 +559,8 @@ ylim([0 3])
 set(gca, 'XTick',[-2000:2000:(resfault_length+500)],'XTickLabel',{'',(0:2000:(resfault_length+500))/1000})
 
 
-saveas(2,fullfile(pathout1,strcat(masterfault,'_sliprates_profile_option',num2str(extrapolate_slip_rate_option),'_',date,'.png')),'png')
-print(fullfile(pathout1,strcat(masterfault,'_sliprates_profile_option',num2str(extrapolate_slip_rate_option),'_',date,'.tiff')),'-dtiff','-r600');
+saveas(2,fullfile(pathout1,strcat(Mainfault,'_sliprates_profile_option',num2str(extrapolate_slip_rate_option),'_',date,'.png')),'png')
+print(fullfile(pathout1,strcat(Mainfault,'_sliprates_profile_option',num2str(extrapolate_slip_rate_option),'_',date,'.tiff')),'-dtiff','-r600');
 
 close(2);
    end
@@ -574,5 +574,5 @@ print(fullfile(pathout1,strcat('map','_sliprates_profile_option',num2str(extrapo
 fclose(fid_prop);
 fclose(fid_geom);
 fclose(fid_momentrate);
-fclose(fid_usedmasterfaults);
+fclose(fid_usedMainfaults);
 fclose(fid_usedsliprate);
