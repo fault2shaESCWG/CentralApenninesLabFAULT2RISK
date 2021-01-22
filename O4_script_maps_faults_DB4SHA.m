@@ -1,4 +1,4 @@
-% this code maps trace data stored in the Fault2SHA_CentralApennines_Database.xls
+% this code maps faults stored in the Fault2SHA_CentralApennines_Database.xls
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% start
@@ -31,19 +31,19 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% read the traces from the shapefiles
-input_traces = shaperead('traces.shp');
-traceName = {input_traces.traceName}';
-TraceActivity = [input_traces.traceActiv]';
+input_faults = shaperead('faults.shp');
+faultName = {input_faults.Name}';
+
 % read the DB-excel format
 [fault_data,Mainfault_names,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','Fault');
 [Mainfault_data,Mainfault_names2,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','MainFault');
-
+FaultActivity = fault_data(:,8);
 [sliprate_data,sliprate_TXT5,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','SlipRate');
 [localgeomKin_data,localgeomKin_TXT6,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','LocalGeometryKinematics');
 
 % number of traces in the DB
-n_traces = size(traceName,1);
-fprintf('you have %i traces in the DB\n', n_traces)
+n_traces = size(faultName,1);
+fprintf('you have %i faults in the DB\n', n_traces)
 
 
 % extract slip rate coordinates from the DB
@@ -82,13 +82,14 @@ end
 %% make figure
 figure(1)
 ax = usamap(latlim,lonlim);
-setm(ax,'MapProjection','mercator', 'MapLatLimit',latlim,'MapLonLimit',lonlim,'FlineWidth',0.7,'FontSize',6);
+ setm(ax,'MapProjection','mercator', 'MapLatLimit',latlim,'MapLonLimit',lonlim,...
+     'FlineWidth',0.7,'FontSize',8,'MLabelLocation',1,'PLabelLocation',1);
 
 hold on
 
 for i_trace = 1:n_traces
     
-plotm(input_traces(i_trace,:).Y,input_traces(i_trace,:).X,'-','LineWidth',1.,'color',coloreactivity(TraceActivity(i_trace),:))
+plotm(input_faults(i_trace,:).Y,input_faults(i_trace,:).X,'-','LineWidth',1.,'color',coloreactivity(FaultActivity(i_trace),:))
 
 end
 hs=scatterm(slipratecoordinateWGS(:,2),slipratecoordinateWGS(:,1),12,slipratePreferred(:,1),'filled');
@@ -98,25 +99,26 @@ colormap(coloreslip)
 
  
 % legend ACTIVITY
-yl = 42.95;xl = 13.4;xl1 =13.50; xl2 =13.55;xl3 = 13.56;
-textm(yl,xl,'Activity Scale','FontSize',6,'FontAngle','Italic')
+yl = 42.95;xl = 13.35;xl1 =13.50; xl2 =13.55;xl3 = 13.56;
+textm(yl,xl,'Activity Scale','FontSize',8,'FontAngle','Italic')
 for as = values
 plotm([(yl-as*0.06),(yl-as*0.06)],[xl1,xl2],'-','LineWidth',1.5,'color',coloreactivity(as,:));
-textm((yl-as*0.06),xl3,num2str(as),'FontSize',6)
+textm((yl-as*0.06),xl3,num2str(as),'FontSize',8)
 end
 
 % legend SLIPRATES
-yl = 42.95;xl = 13.8;xl1 =13.85; xl2 =13.9;
-textm(yl,xl,'Slip rate (mm/a)','FontSize',6,'FontAngle','Italic')
+yl = 42.95;xl = 13.8;xl1 =13.88; xl2 =13.92;
+textm(yl,xl,'Slip rate (mm/a)','FontSize',8,'FontAngle','Italic')
 labelsliprate = {'<0.1','0.1-0.5','0.6-1.0','>1.0'};
 for srlim = 1:size(coloreslip,1)
 plotm ((yl-srlim*0.06),xl1,'o','MarkerSize',3,'LineWidth',0.5,...
     'MarkerEdgeColor','k','MarkerFaceColor',(coloreslip(srlim,:)))
-textm((yl-srlim*0.06),xl2,labelsliprate(srlim),'FontSize',6)
+textm((yl-srlim*0.06),xl2,labelsliprate(srlim),'FontSize',8)
 end
 
 % inset
-h2 = axes('pos',[.31 .24 .2 .15]);
+%h2 = axes('pos',[.31 .24 .2 .15]);
+h2 = axes('pos',[.32 .26 .18 .11]);
 h2 = worldmap([35 46],[5 21]);
 land = shaperead('landareas.shp', 'UseGeoCoords', true);
 geoshow([land.Lat],[land.Lon])
@@ -126,6 +128,23 @@ setm(h2, 'FFaceColor','w','FlineWidth',0.7)
 mlabel; plabel; gridm % toggle off
 hold off
 
+%% move label of meridians and parallels
+set(findobj(ax.Children, 'Tag', 'MLabel'),'Units','points')          % convert label position from 'data' to 'points'
+mlabels = findobj(ax.Children, 'Tag', 'MLabel');                     % find all labels
+mlabelpos = get(findobj(ax.Children, 'Tag', 'MLabel'),'Position');    % get the positions of each label
+for iL = 1 : length(mlabelpos)                                           % loop over each label
+    mlabelpos{iL}(2) = mlabelpos{iL}(2) + 20;                             % add desired offset to the label position
+    set(mlabels(iL),'Position',mlabelpos{iL})                            % set new label position
+end
+set(findobj(ax.Children, 'Tag', 'PLabel'),'Units','points')          % convert label position from 'data' to 'points'
+plabels = findobj(ax.Children, 'Tag', 'PLabel');                     % find all labels
+plabelpos = get(findobj(ax.Children, 'Tag', 'PLabel'),'Position');    % get the positions of each label
+for iL = 1 : length(plabelpos)                                           % loop over each label
+    plabelpos{iL}(1) = plabelpos{iL}(1) + 35;
+    plabelpos{iL}(2) = plabelpos{iL}(2) + 5;                    % add desired offset to the label position
+    set(plabels(iL),'Position',plabelpos{iL})                            % set new label position
+end
 
-saveas(1,fullfile(pathout1,'MapsTraces_DB4SHA.png'),'tiff')
-print(fullfile(pathout1,'MapsTraces_DB4SHA'),'-depsc','-r600');
+
+saveas(1,fullfile(pathout1,'MapsFaults_DB4SHA.png'),'tiff')
+print(fullfile(pathout1,'MapsFaults_DB4SHA'),'-depsc','-r600');

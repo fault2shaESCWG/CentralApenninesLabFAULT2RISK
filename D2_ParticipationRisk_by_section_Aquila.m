@@ -11,7 +11,7 @@ warning('off','all')
 site = [13.4 42.35]; sito = 'L Aquila'; % coordinate of the site
 %site = [13.44 42.04]; sito = 'AV'; % coordinate of the site
 fragility ='_Rostietal.2020-L-type';
-OQ_RUN_ID = '6';% Number of Openquake run ID
+OQ_RUN_ID = '5';% Number of Openquake run ID
 fprintf(['Warning: You are using OQ_RUN_ID ',num2str(OQ_RUN_ID)]);
 
 mainpath = 'WORKING_DIRECTORY_A1B1C1_10km';
@@ -118,10 +118,10 @@ end
 
  hold on
  ax = usamap(latlim,lonlim);
- ax.FontSize = 6;
+ ax.FontSize = 8;
  setm(ax,'MapProjection','mercator', 'MapLatLimit',latlim,'MapLonLimit',lonlim,...
-     'FlineWidth',0.7,'FontSize',6,'MLabelLocation',0.2,'PLabelLocation',0.4);
-%
+     'FlineWidth',0.7,'FontSize',8,'MLabelLocation',0.2,'PLabelLocation',0.4);
+
 
 %yl = 43.032;
 yl =42.699;
@@ -162,10 +162,11 @@ end
 
 end
 h = textm(site(:,2),site(:,1)-0.13,sito,'FontSize',6);
-l= plotm(site(:,2),site(:,1),'s','MarkerSize',8);
+l = plotm(site(:,2),site(:,1),'s','MarkerSize',8);
 l.MarkerFaceColor = 'yellow';
 l.MarkerEdgeColor = 'black';
-plotm(slip_rateDP.lat,slip_rateDP.lon,'ok','MarkerSize',4)
+plotm(slip_rateDP.lat,slip_rateDP.lon,'ok','MarkerSize',4,'MarkerFaceColor', 'white')
+
 title(strcat(figure_title,'fragility-',num2str(f)), 'Interpreter', 'none');
 
 % legend of SLIPRATES

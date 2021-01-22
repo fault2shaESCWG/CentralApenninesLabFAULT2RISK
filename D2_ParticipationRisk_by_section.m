@@ -11,7 +11,7 @@ warning('off','all')
 site = [13.4 42.35]; sito = 'AQ'; % coordinate of the site
 %site = [13.44 42.04]; sito = 'AV'; % coordinate of the site
 fragility ='_Rostietal.2020-L-type';
-OQ_RUN_ID = '6';% Number of Openquake run ID
+OQ_RUN_ID = '5';% Number of Openquake run ID
 fprintf(['Warning: You are using OQ_RUN_ID ',num2str(OQ_RUN_ID)]);
 
 mainpath = 'WORKING_DIRECTORY_A1B1C1_10km';

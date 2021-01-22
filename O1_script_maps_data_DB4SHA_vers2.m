@@ -1,6 +1,6 @@
 % this code maps data stored in the Fault2SHA_CentralApennines_Database.xls
-% and coordinates of MasterFaults according to the files given in the
-% folder MasterFaults_lonlat
+% and coordinates of MainFaults according to the files given in the
+% folder MainFaults_lonlat
 % and produces a map .......
 
 
@@ -14,7 +14,7 @@ clear all
 clc
 close all
 warning('off','all')
-addpath ('INPUT/','INPUT/MasterFaults_lonlat/')
+addpath ('INPUT/','INPUT/MainFaults_lonlat/')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% make output directory
 pathout1 = fullfile('WORKING_DIRECTORY_A1B1C1_10km','Visualization','figure');
@@ -26,8 +26,8 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% USER OPTIONS
-maxdiffUTM=100; % in meters, specify the max difference between two vertexes when resampling the masterfault trace
-dmax = 500; % in meters, specify the maximum distance to associate a point to a masterfault
+maxdiffUTM=100; % in meters, specify the max difference between two vertexes when resampling the Mainfault trace
+dmax = 500; % in meters, specify the maximum distance to associate a point to a Mainfault
 % colors for figures
 limitisliprate = [0.0 0.1 0.5 1.0 3.0];
 coloreslip = [.5 .5 .5; 0 1 0; 0 0 1; 1 0 0];
@@ -56,50 +56,50 @@ ax = usamap(latlim,lonlim);
 setm(ax,'MapProjection','mercator', 'MapLatLimit',latlim,'MapLonLimit',lonlim,'FlineWidth',0.7,'FontSize',6);
 
 hold on
-%title('MasterFault traces and slip rate data')
+%title('MainFault traces and slip rate data')
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% read the DB-excel format
-[fault_data,masterfault_names,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','Fault');
-[masterfault_data,masterfault_names2,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','MasterFault');
+[fault_data,Mainfault_names,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','Fault');
+[Mainfault_data,Mainfault_names2,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','MainFault');
 
 [sliprate_data,sliprate_TXT5,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','SlipRate');
 [localgeomKin_data,localgeomKin_TXT6,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','LocalGeometryKinematics');
 
 % faults name listed in the DB
-masterfaults_all = masterfault_names(2:end,4);
-masterfaults = unique(masterfaults_all);
+Mainfaults_all = Mainfault_names(2:end,4);
+Mainfaults = unique(Mainfaults_all);
 
-% number of masterfaults in the DB
-n_masterfault = size(masterfaults,1);
-fprintf('you have %i masterfaults in the DB\n', n_masterfault)
+% number of Mainfaults in the DB
+n_Mainfault = size(Mainfaults,1);
+fprintf('you have %i Mainfaults in the DB\n', n_Mainfault)
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% loop for masterfaults
+%% loop for Mainfaults
 IDsection =0;
 
-for nf = 1:size(masterfaults,1);
+for nf = 1:size(Mainfaults,1);
     Lat_simplifiedtrace = [];
     Lon_simplifiedtrace = [];
-    masterfault =[];
-    masterfault = char(masterfaults(nf,:));
-    % if masterfaults exists in the folder MastreFaults_lonlat load coordinates of the masterfaults
-    in_name_masterfault = fullfile('MasterFaults_lonlat',strcat(masterfault,'.txt'));
-    if exist(in_name_masterfault) ~= 2 % if a file exist the value is 2
-      fprintf(['there are no coordinates of the ', masterfault,' in the folder\n'])
-    else  % use this MasterFault
+    Mainfault =[];
+    Mainfault = char(Mainfaults(nf,:));
+    % if Mainfaults exists in the folder MastreFaults_lonlat load coordinates of the Mainfaults
+    in_name_Mainfault = fullfile('MainFaults_lonlat',strcat(Mainfault,'.txt'));
+    if exist(in_name_Mainfault) ~= 2 % if a file exist the value is 2
+      fprintf(['there are no coordinates of the ', Mainfault,' in the folder\n'])
+    else  % use this MainFault
         coordinateUTM=[];coordinateWGS=[];
-        coordinateWGS = load(in_name_masterfault);
+        coordinateWGS = load(in_name_Mainfault);
 
 % position of the fault in the excel-Sheets of DB 
-h1 = find(strcmp(masterfault_names2(:,2),masterfault))-1; % position-header
-h5 = find(strcmp(sliprate_TXT5(:,4),masterfault))-1; % position-header
-h6 = find(strcmp(localgeomKin_TXT6(:,4),masterfault))-1; % position-header
+h1 = find(strcmp(Mainfault_names2(:,2),Mainfault))-1; % position-header
+h5 = find(strcmp(sliprate_TXT5(:,4),Mainfault))-1; % position-header
+h6 = find(strcmp(localgeomKin_TXT6(:,4),Mainfault))-1; % position-header
 
-faultActivity = masterfault_data(h1,7);
+faultActivity = Mainfault_data(h1,7);
 
 
 % calculate the average dip from LocalGeometryKinematics 
@@ -109,7 +109,7 @@ average_dip(average_dip>60 | isnan(average_dip)) =55;
 
 % CHECK if the order of the vertexes of the fault are given according to right-hand rule
 
-strike = masterfault_data(h1,3);
+strike = Mainfault_data(h1,3);
 az = azimuth(coordinateWGS(1,2),coordinateWGS(1,1),coordinateWGS(end,2),coordinateWGS(end,1));
 
 d1 = az - strike;
@@ -207,7 +207,7 @@ distance_sliprate = resfault_cumsum_length(d);
 % check if two or more meausures are on the same point
 u = unique(distance_sliprate);
 if length(u) < length(distance_sliprate)
-    fprintf([masterfault,' there are 2 or more measures at the same location (used the mean) >>\n'])
+    fprintf([Mainfault,' there are 2 or more measures at the same location (used the mean) >>\n'])
     distanza_sliprate_2   =[];slipratePreferred_2   =[];sliprateError_2       =[];
     slipratecoordinateWGS_2 =[];slipratecoordinateUTM_2 =[];   
     for iu = 1:length(u)
