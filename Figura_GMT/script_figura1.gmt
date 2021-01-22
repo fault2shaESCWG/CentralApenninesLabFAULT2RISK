@@ -1,0 +1,29 @@
+#!/bin/csh
+#####################################
+
+
+
+gmt begin Fig1 pdf
+	
+gmt coast -R12.7/14.3/41.6/43.1 -J+proj=merc+ellps=WGS84+units=m+width=15c -W -B1 > Fig1
+gmt psxy -R12.7/14.3/41.6/43.1 -J+proj=merc+ellps=WGS84+units=m+width=15c -W0.25p -Wblack -L -A0.3 -h1 traces.txt > Fig1
+gmt psxy -R12.7/14.3/41.6/43.1 -J+proj=merc+ellps=WGS84+units=m+width=15c -W0.25p -Wblack -L -Sc0.3 -h1 cpti15_Mw5.txt > Fig1
+
+gmt meca -R12.7/14.3/41.6/43.1 -J+proj=merc+ellps=WGS84+units=m+width=15c -Sa0.4 -h1 -Gred fm_M6.txt > Fig1
+
+
+
+gmt psxy -R12.7/14.3/41.6/43.1 -J+proj=merc+ellps=WGS84+units=m+width=15c -W0.25p,blue,- -L -A0.3 -h1 background.txt > Fig1
+
+ 
+	gmt inset begin -D13.8E/42.6N/14.2E/43.N+r -F+gwhite+p1.5p
+			gmt coast -R6E/20E/34N/48N -JM4c -Ggrey -B0
+			gmt psxy -R6E/20E/34N/48N -JM4c -W0.7p,blue -Gblue -L -A0.3 -h1 background.txt
+	gmt inset end
+
+gmt psxy -R12.7/14.3/41.6/43.1 -J+proj=merc+ellps=WGS84+units=m+width=15c -W0.25p -Wblack -L -Sc0.3 -h1 <<END > Fig1
+lon lat testo
+12.8 42 earthquake with Mw>=5
+END
+
+gmt end show
