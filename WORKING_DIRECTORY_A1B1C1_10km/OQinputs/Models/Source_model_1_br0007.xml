@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<nrml xmlns="http://openquake.org/xmlns/nrml/0.4" xmlns:gml="http://www.opengis.net/gml">
+   <sourceModel name="Source_model_1_22-Jan-2021">
+<simpleFaultSource id="8" name="ModelMultiFaultsTest_BariscianoMtStabiata_2" tectonicRegion="Active_Shallow_Crust">
+     <simpleFaultGeometry>
+       <gml:LineString>
+       <gml:posList>
+       13.4794      42.3944
+       13.543      42.3854
+       13.5757      42.3643
+       </gml:posList>
+       </gml:LineString>
+       <dip>53</dip>
+       <upperSeismoDepth>0</upperSeismoDepth>
+       <lowerSeismoDepth>10</lowerSeismoDepth>
+     </simpleFaultGeometry>
+       <rake>-90</rake>
+       <magScaleRel>WC1994</magScaleRel>
+       <ruptAspectRatio>1.0</ruptAspectRatio>
+       <incrementalMFD minMag="5" binWidth="0.1">
+         <occurRates> 0.0 0.0 8.397968246371109e-05 2.9726531087051486e-05 2.104477236744185e-05 1.4898557880854301e-05 3.164211373546173e-05 1.4933934018682422e-05 1.0572415632797122e-05 7.484697077995582e-06 7.948139615638897e-06 1.8756173115293794e-06 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0</occurRates>
+       </incrementalMFD>
+</simpleFaultSource>
+   </sourceModel>
+   </nrml>

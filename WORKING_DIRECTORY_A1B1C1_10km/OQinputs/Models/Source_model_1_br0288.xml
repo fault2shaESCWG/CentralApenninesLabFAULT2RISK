@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<nrml xmlns="http://openquake.org/xmlns/nrml/0.4" xmlns:gml="http://www.opengis.net/gml">
+   <sourceModel name="20200520">
+<characteristicFaultSource id="289" name="ModelMultiFaultsTest_scenario_f_1=['Sulmona_1']_f_2=['Sulmona_2']_f_3=['Sulmona_3']" tectonicRegion="Active_Shallow_Crust">
+     <surface>
+     <simpleFaultGeometry>
+       <gml:LineString>
+       <gml:posList>
+       13.8175      42.1909
+       13.8555      42.1542
+       13.8688      42.1279
+       </gml:posList>
+       </gml:LineString>
+       <dip>54</dip>
+       <upperSeismoDepth>0</upperSeismoDepth>
+       <lowerSeismoDepth>10</lowerSeismoDepth>
+     </simpleFaultGeometry>
+     <simpleFaultGeometry>
+       <gml:LineString>
+       <gml:posList>
+       13.8688      42.1279
+       13.8961      42.1198
+       13.9476      42.0849
+       </gml:posList>
+       </gml:LineString>
+       <dip>54</dip>
+       <upperSeismoDepth>0</upperSeismoDepth>
+       <lowerSeismoDepth>10</lowerSeismoDepth>
+     </simpleFaultGeometry>
+     <simpleFaultGeometry>
+       <gml:LineString>
+       <gml:posList>
+       13.9476      42.0849
+       13.9672      42.0775
+       13.9888      42.0547
+       14.0274       42.058
+       </gml:posList>
+       </gml:LineString>
+       <dip>54</dip>
+       <upperSeismoDepth>0</upperSeismoDepth>
+       <lowerSeismoDepth>10</lowerSeismoDepth>
+     </simpleFaultGeometry>
+     </surface>
+       <rake>-90</rake>
+       <magScaleRel>WC1994</magScaleRel>
+       <ruptAspectRatio>1.0</ruptAspectRatio>
+       <incrementalMFD minMag="5" binWidth="0.1">
+         <occurRates> 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 2.309484374052489e-05 2.7249828778524625e-05 1.157484084536768e-05 5.4629065209302715e-06 2.1270929030874696e-05 9.582786523763064e-06 8.722405699908559e-06 1.0977760613223921e-05</occurRates>
+       </incrementalMFD>
+</characteristicFaultSource>
+   </sourceModel>
+   </nrml>

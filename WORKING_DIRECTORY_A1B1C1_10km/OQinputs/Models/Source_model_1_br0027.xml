@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<nrml xmlns="http://openquake.org/xmlns/nrml/0.4" xmlns:gml="http://www.opengis.net/gml">
+   <sourceModel name="Source_model_1_22-Jan-2021">
+<simpleFaultSource id="28" name="ModelMultiFaultsTest_Laga_1" tectonicRegion="Active_Shallow_Crust">
+     <simpleFaultGeometry>
+       <gml:LineString>
+       <gml:posList>
+       13.2658      42.7237
+       13.2719       42.696
+       13.3335      42.6419
+       </gml:posList>
+       </gml:LineString>
+       <dip>53</dip>
+       <upperSeismoDepth>0</upperSeismoDepth>
+       <lowerSeismoDepth>10</lowerSeismoDepth>
+     </simpleFaultGeometry>
+       <rake>-90</rake>
+       <magScaleRel>WC1994</magScaleRel>
+       <ruptAspectRatio>1.0</ruptAspectRatio>
+       <incrementalMFD minMag="5" binWidth="0.1">
+         <occurRates> 0.00020680843580449392 0.00014640916030286957 0.0 3.6689201014943766e-05 5.1947930381902666e-05 9.194079580337199e-05 9.112473832268834e-05 2.7647731863709336e-05 1.957309522069609e-05 1.3856690248840934e-05 0.0 4.629864168697756e-06 3.2776928205007576e-06 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0</occurRates>
+       </incrementalMFD>
+</simpleFaultSource>
+   </sourceModel>
+   </nrml>

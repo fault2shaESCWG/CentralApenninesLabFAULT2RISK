@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<nrml xmlns="http://openquake.org/xmlns/nrml/0.4" xmlns:gml="http://www.opengis.net/gml">
+   <sourceModel name="20200520">
+<characteristicFaultSource id="145" name="ModelMultiFaultsTest_scenario_f_1=['Maiella_1']_f_2=['Maiella_2']" tectonicRegion="Active_Shallow_Crust">
+     <surface>
+     <simpleFaultGeometry>
+       <gml:LineString>
+       <gml:posList>
+       14.0485      42.1333
+       14.0602      42.0837
+       14.0729       42.068
+       </gml:posList>
+       </gml:LineString>
+       <dip>53</dip>
+       <upperSeismoDepth>0</upperSeismoDepth>
+       <lowerSeismoDepth>10</lowerSeismoDepth>
+     </simpleFaultGeometry>
+     <simpleFaultGeometry>
+       <gml:LineString>
+       <gml:posList>
+       14.0729       42.068
+       14.0802      41.9936
+       </gml:posList>
+       </gml:LineString>
+       <dip>53</dip>
+       <upperSeismoDepth>0</upperSeismoDepth>
+       <lowerSeismoDepth>10</lowerSeismoDepth>
+     </simpleFaultGeometry>
+     </surface>
+       <rake>-90</rake>
+       <magScaleRel>WC1994</magScaleRel>
+       <ruptAspectRatio>1.0</ruptAspectRatio>
+       <incrementalMFD minMag="5" binWidth="0.1">
+         <occurRates> 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 8.550540914994246e-05 8.743683570518406e-05 6.190053923737373e-05 6.404786848306714e-05 2.147798770644148e-05 1.6894723170921815e-06 1.1960548047191151e-06 1.1007645439612823e-05 2.997236994218923e-06 1.6975050358859554e-06 3.6052246023789294e-06</occurRates>
+       </incrementalMFD>
+</characteristicFaultSource>
+   </sourceModel>
+   </nrml>

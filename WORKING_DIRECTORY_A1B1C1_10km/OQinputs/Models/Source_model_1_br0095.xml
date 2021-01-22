@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<nrml xmlns="http://openquake.org/xmlns/nrml/0.4" xmlns:gml="http://www.opengis.net/gml">
+   <sourceModel name="20200520">
+<characteristicFaultSource id="96" name="ModelMultiFaultsTest_scenario_f_1=['Barete_1']_f_2=['Barete_2']" tectonicRegion="Active_Shallow_Crust">
+     <surface>
+     <simpleFaultGeometry>
+       <gml:LineString>
+       <gml:posList>
+       13.2145      42.4996
+       13.2639      42.4742
+       </gml:posList>
+       </gml:LineString>
+       <dip>42</dip>
+       <upperSeismoDepth>0</upperSeismoDepth>
+       <lowerSeismoDepth>10</lowerSeismoDepth>
+     </simpleFaultGeometry>
+     <simpleFaultGeometry>
+       <gml:LineString>
+       <gml:posList>
+       13.2639      42.4742
+       13.3025        42.44
+       </gml:posList>
+       </gml:LineString>
+       <dip>42</dip>
+       <upperSeismoDepth>0</upperSeismoDepth>
+       <lowerSeismoDepth>10</lowerSeismoDepth>
+     </simpleFaultGeometry>
+     </surface>
+       <rake>-90</rake>
+       <magScaleRel>WC1994</magScaleRel>
+       <ruptAspectRatio>1.0</ruptAspectRatio>
+       <incrementalMFD minMag="5" binWidth="0.1">
+         <occurRates> 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0002982267501031333 7.741373585956832e-05 6.476922394706485e-05 5.9961744913051345e-05 2.9964469083890708e-05 1.767768297437415e-05 0.0 8.859829026866569e-07 5.645050748940985e-06 1.332129960115768e-06 9.430757895157554e-07 6.676465295424236e-07</occurRates>
+       </incrementalMFD>
+</characteristicFaultSource>
+   </sourceModel>
+   </nrml>
