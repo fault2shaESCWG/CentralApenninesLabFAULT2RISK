@@ -6,7 +6,7 @@ clear all
 clc
 close all
 warning('off','all')
-addpath ('INPUT/','INPUT/MasterFaults_lonlat/')
+addpath ('INPUT/','INPUT/MainFaults_lonlat/')
 addpath ('SHAPEFILES/')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% USER OPTIONS
@@ -15,7 +15,7 @@ limitisliprate = [0.0 0.1 0.5 1.0 3.0];
 coloreslip = [.5 .5 .5; 0 1 0; 0 0 1; 1 0 0];
 % fault certainActivity scale
 values = 1:4;
-coloreactivity = [255,0,0; 255,155,0; 255,255,0; 204,204,204]/255;
+coloreactivity = [255,0,0; 255,125,0; 255,195,0; 255,255,0]/255;
 list = {'GioiaVecchio', 'Magnola','OvindoliPezza','SanBenedettoDeiMarsi',...
     'CastelDiIeri','Frattura','LagoDiScanno','Bazzano','Collebrincioni',...
     'Fossa','MtRuzza','MtStabiata','Paganica','SanDemetrioNeVestini',...
@@ -40,11 +40,13 @@ input_faults = shaperead('faults.shp');
 faultName = {input_faults.Name}';
 
 % read the DB-excel format
-[fault_data,masterfault_names,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','Fault');
-[masterfault_data,masterfault_names2,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','MasterFault');
+db = 'Fault2SHA_CentralApennines_Database_2021_v1_xls2013.xlsx';
+
+[fault_data,Mainfault_names,~] = xlsread (db,'Fault');
+[Mainfault_data,Mainfault_names2,~] = xlsread (db,'MainFault');
 FaultActivity = fault_data(:,8);
-[sliprate_data,sliprate_TXT5,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','SlipRate');
-[localgeomKin_data,localgeomKin_TXT6,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','LocalGeometryKinematics');
+[sliprate_data,sliprate_TXT5,~] = xlsread (db,'SlipRate');
+[localgeomKin_data,localgeomKin_TXT6,~] = xlsread (db,'LocalGeometryKinematics');
 
 % number of traces in the DB
 n_traces = size(faultName,1);
