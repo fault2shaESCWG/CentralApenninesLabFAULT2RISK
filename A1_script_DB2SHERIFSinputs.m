@@ -27,6 +27,7 @@ addpath ('INPUT/','INPUT/MainFaults_lonlat/')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % USER OPTIONS
+db = 'Fault2SHA_CentralApennines_Database_2021_v1_xls2013.xlsx';
 extrapolate_slip_rate_option =1; % 1=tip to 0mm/year, 2 = no zero
 modelname = 'ModelMultiFaultsTest'
 maxdiffUTM= 0.1; % in km, specify the max difference between two vertexes when resampling the Mainfault trace
@@ -43,7 +44,8 @@ limitisliprate = [0.0 0.1 0.5 1 3];
 coloreslip = [.5 .5 .5; 0 1 0; 0 0 1; 1 0 0];
 % fault certainActivity scale
 values = 1:4;
-coloreactivity = [1 0 0; 0 0 1; 0 1 0; .5 .5 .5];
+coloreactivity = [255,0,0; 255,125,0; 255,195,0; 255,255,0]/255;
+
 % make output directory
 mainpath = 'WORKING_DIRECTORY_A1B1C1_10km'
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -70,12 +72,12 @@ dmax = dmax*1000;
 sections_length_input = sections_length_input*1000; 
 
 % read the DB-excel format
-[fault_data,Mainfault_names,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','Fault');
-[Mainfault_data,Mainfault_names2,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','MainFault');
-[sliprate_data,sliprate_TXT5,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','SlipRate');
-[localgeomKin_data,localgeomKin_TXT6,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','LocalGeometryKinematics');
+[fault_data,Mainfault_names,~] = xlsread (db,'Fault');
+[Mainfault_data,Mainfault_names2,~] = xlsread (db,'MainFault');
+[sliprate_data,sliprate_TXT5,~] = xlsread (db,'SlipRate');
+[localgeomKin_data,localgeomKin_TXT6,~] = xlsread (db,'LocalGeometryKinematics');
 
-[~,Mainfault_selection,~] = xlsread ('Fault2SHA_CentralApennines_Database.xlsx','MainFaultSelection','E7:E12');
+[~,Mainfault_selection,~] = xlsread (db,'MainFaultOptionChoice','E7:E12');
 R = Mainfault_selection;
 display ('You have selected the following Main fault options')
 R(~cellfun('isempty',R))
