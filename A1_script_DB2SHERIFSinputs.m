@@ -28,7 +28,7 @@ addpath ('INPUT/','INPUT/MainFaults_lonlat/')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % USER OPTIONS
 db = 'Fault2SHA_CentralApennines_Database_2021_v1_xls2013.xlsx';
-extrapolate_slip_rate_option =1; % 1=tip to 0mm/year, 2 = no zero
+extrapolate_slip_rate_option =1; % 1=tip to 0mm/year, 2 = arithmetic mean of the slip rate collected along the fault
 modelname = 'ModelMultiFaultsTest'
 maxdiffUTM= 0.1; % in km, specify the max difference between two vertexes when resampling the Mainfault trace
 dmax = 0.5; % in km, specify the maximum distance to associate a point to a Mainfault
